@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="activePatients" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20"
+              topMargin="20" bottomMargin="20" uuid="07bd589c-8bae-469e-8376-6b2a6b8fe3ba">
+    <property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+    <property name="com.jaspersoft.studio.data.defaultdataadapter" value="hms_nextgen_dev"/>
+    <style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
+        <box>
+            <pen lineWidth="0.5" lineColor="#000000"/>
+            <topPen lineWidth="0.5" lineColor="#000000"/>
+            <leftPen lineWidth="0.5" lineColor="#000000"/>
+            <bottomPen lineWidth="0.5" lineColor="#000000"/>
+            <rightPen lineWidth="0.5" lineColor="#000000"/>
+        </box>
+    </style>
+    <style name="Table_CH" mode="Opaque" backcolor="#FFFFFF">
+        <box>
+            <pen lineWidth="0.5" lineColor="#000000"/>
+            <topPen lineWidth="0.5" lineColor="#000000"/>
+            <leftPen lineWidth="0.5" lineColor="#000000"/>
+            <bottomPen lineWidth="0.5" lineColor="#000000"/>
+            <rightPen lineWidth="0.5" lineColor="#000000"/>
+        </box>
+    </style>
+    <style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+        <box>
+            <pen lineWidth="0.5" lineColor="#000000"/>
+            <topPen lineWidth="0.5" lineColor="#000000"/>
+            <leftPen lineWidth="0.5" lineColor="#000000"/>
+            <bottomPen lineWidth="0.5" lineColor="#000000"/>
+            <rightPen lineWidth="0.5" lineColor="#000000"/>
+        </box>
+    </style>
+    <subDataset name="activePatients" uuid="ec14a7a7-cb84-49f4-954d-19804a6c53ef">
+        <property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+        <property name="com.jaspersoft.studio.data.defaultdataadapter" value="hms_nextgen_dev"/>
+        <parameter name="account_id" class="java.lang.Integer">
+            <defaultValueExpression><![CDATA[$P{account_id}]]></defaultValueExpression>
+        </parameter>
+        <queryString language="SQL">
+            <![CDATA[select a.name hospital,u.username, concat(u.first_name,' ',u.last_name) name, u.gender, u.date_of_birth, u.ssn, concat(u.country_code,' ',u.mobile_number) mobile, u.email,
+concat(u.address,' ,Zipcode-',u.zipcode) address
+from user u 
+join account a on u.account_id = a.id
+join role r on r.id = u.role_id
+where a.id=$P{account_id} and r.id=4 and u.active=1]]>
+        </queryString>
+        <field name="hospital" class="java.lang.String">
+            <property name="com.jaspersoft.studio.field.name" value="hospital"/>
+            <property name="com.jaspersoft.studio.field.label" value="hospital"/>
+            <property name="com.jaspersoft.studio.field.tree.path" value="account"/>
+        </field>
+        <field name="username" class="java.lang.String">
+            <property name="com.jaspersoft.studio.field.name" value="username"/>
+            <property name="com.jaspersoft.studio.field.label" value="username"/>
+            <property name="com.jaspersoft.studio.field.tree.path" value="user"/>
+            <fieldDescription><![CDATA[]]></fieldDescription>
+        </field>
+        <field name="name" class="java.lang.String">
+            <property name="com.jaspersoft.studio.field.name" value="name"/>
+            <property name="com.jaspersoft.studio.field.label" value="name"/>
+        </field>
+        <field name="gender" class="java.lang.String">
+            <property name="com.jaspersoft.studio.field.name" value="gender"/>
+            <property name="com.jaspersoft.studio.field.label" value="gender"/>
+            <property name="com.jaspersoft.studio.field.tree.path" value="user"/>
+            <fieldDescription><![CDATA[]]></fieldDescription>
+        </field>
+        <field name="date_of_birth" class="java.sql.Date">
+            <property name="com.jaspersoft.studio.field.name" value="date_of_birth"/>
+            <property name="com.jaspersoft.studio.field.label" value="date_of_birth"/>
+            <property name="com.jaspersoft.studio.field.tree.path" value="user"/>
+            <fieldDescription><![CDATA[]]></fieldDescription>
+        </field>
+        <field name="ssn" class="java.lang.String">
+            <property name="com.jaspersoft.studio.field.name" value="ssn"/>
+            <property name="com.jaspersoft.studio.field.label" value="ssn"/>
+            <property name="com.jaspersoft.studio.field.tree.path" value="user"/>
+            <fieldDescription><![CDATA[]]></fieldDescription>
+        </field>
+        <field name="mobile" class="java.lang.String">
+            <property name="com.jaspersoft.studio.field.name" value="mobile"/>
+            <property name="com.jaspersoft.studio.field.label" value="mobile"/>
+        </field>
+        <field name="email" class="java.lang.String">
+            <property name="com.jaspersoft.studio.field.name" value="email"/>
+            <property name="com.jaspersoft.studio.field.label" value="email"/>
+            <property name="com.jaspersoft.studio.field.tree.path" value="user"/>
+            <fieldDescription><![CDATA[]]></fieldDescription>
+        </field>
+        <field name="address" class="java.lang.String">
+            <property name="com.jaspersoft.studio.field.name" value="address"/>
+            <property name="com.jaspersoft.studio.field.label" value="address"/>
+        </field>
+    </subDataset>
+    <parameter name="account_id" class="java.lang.Integer">
+        <defaultValueExpression><![CDATA[$P{account_id}]]></defaultValueExpression>
+    </parameter>
+    <queryString language="SQL">
+        <![CDATA[select a.name hospital,u.username, concat(u.first_name,' ',u.last_name) name, u.gender, u.date_of_birth, u.ssn, concat(u.country_code,' ',u.mobile_number) mobile, u.email,
+concat(u.address,' ,Zipcode-',u.zipcode) address
+from user u 
+join account a on u.account_id = a.id
+join role r on r.id = u.role_id
+where a.id=$P{account_id} and r.id=4 and u.active=1]]>
+    </queryString>
+    <field name="hospital" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="hospital"/>
+        <property name="com.jaspersoft.studio.field.label" value="hospital"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="account"/>
+    </field>
+    <field name="username" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="username"/>
+        <property name="com.jaspersoft.studio.field.label" value="username"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="user"/>
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="name" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="name"/>
+        <property name="com.jaspersoft.studio.field.label" value="name"/>
+    </field>
+    <field name="gender" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="gender"/>
+        <property name="com.jaspersoft.studio.field.label" value="gender"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="user"/>
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="date_of_birth" class="java.sql.Date">
+        <property name="com.jaspersoft.studio.field.name" value="date_of_birth"/>
+        <property name="com.jaspersoft.studio.field.label" value="date_of_birth"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="user"/>
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="ssn" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="ssn"/>
+        <property name="com.jaspersoft.studio.field.label" value="ssn"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="user"/>
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="mobile" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="mobile"/>
+        <property name="com.jaspersoft.studio.field.label" value="mobile"/>
+    </field>
+    <field name="email" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="email"/>
+        <property name="com.jaspersoft.studio.field.label" value="email"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="user"/>
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="address" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="address"/>
+        <property name="com.jaspersoft.studio.field.label" value="address"/>
+    </field>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="44" splitType="Stretch">
+            <rectangle radius="5">
+                <reportElement x="0" y="0" width="556" height="40" backcolor="#FFFFFF"
+                               uuid="86a35389-0396-46bb-8997-4d305571296c"/>
+                <graphicElement>
+                    <pen lineWidth="1.0" lineColor="#D7D7D7"/>
+                </graphicElement>
+            </rectangle>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="4" y="6" width="232" height="21" forecolor="#000000"
+                               uuid="0fe34804-1acf-4b92-8977-0aff2967501b"/>
+                <textElement textAlignment="Left">
+                    <font size="16" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{hospital}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="321" y="6" width="232" height="20" forecolor="#000000"
+                               uuid="256f49f6-c161-4b5f-ab3c-d5fb9ccb03a9"/>
+                <textElement textAlignment="Right" markup="html"/>
+                <textFieldExpression>
+                    <![CDATA["Date: "+new java.text.SimpleDateFormat("dd-MM-yyyy hh:mm aa").format(new Date())]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+    <pageHeader>
+        <band height="39" splitType="Stretch">
+            <textField>
+                <reportElement x="0" y="7" width="556" height="20" uuid="db4a95b9-76eb-400f-b00e-00c26debf5b9"/>
+                <textElement textAlignment="Center">
+                    <font size="14" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Active Patients List"]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageHeader>
+    <detail>
+        <band height="65" splitType="Stretch">
+            <printWhenExpression><![CDATA[$V{REPORT_COUNT}==1]]></printWhenExpression>
+            <componentElement>
+                <reportElement x="2" y="0" width="550" height="62" uuid="aeab34cf-5757-4d9a-8926-029fc3dba25b">
+                    <property name="com.jaspersoft.studio.layout"
+                              value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+                    <property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+                    <property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+                    <property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+                    <printWhenExpression><![CDATA[$V{REPORT_COUNT}==1]]></printWhenExpression>
+                </reportElement>
+                <jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components"
+                          xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+                    <datasetRun subDataset="activePatients" uuid="73b92588-1596-4d62-b1ab-35f61a408eb8">
+                        <datasetParameter name="account_id">
+                            <datasetParameterExpression><![CDATA[$P{account_id}]]></datasetParameterExpression>
+                        </datasetParameter>
+                    </datasetRun>
+                    <jr:column width="40" uuid="379f5dae-560d-4486-adc2-1145710584ff">
+                        <property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+                        <jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+                            <staticText>
+                                <reportElement x="0" y="0" width="40" height="30"
+                                               uuid="8a95a3e9-cb3b-4dbd-921c-4ae057cb101f">
+                                    <property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+                                </reportElement>
+                                <textElement verticalAlignment="Middle">
+                                    <font isBold="true"/>
+                                    <paragraph leftIndent="3"/>
+                                </textElement>
+                                <text><![CDATA[SL No.]]></text>
+                            </staticText>
+                        </jr:columnHeader>
+                        <jr:detailCell style="Table_TD" height="30">
+                            <textField textAdjust="StretchHeight">
+                                <reportElement x="0" y="0" width="40" height="30"
+                                               uuid="6bd65f34-1abb-463f-b55e-25c8f015fb0d">
+                                    <property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+                                </reportElement>
+                                <textElement>
+                                    <paragraph leftIndent="3"/>
+                                </textElement>
+                                <textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+                            </textField>
+                        </jr:detailCell>
+                    </jr:column>
+                    <jr:column width="75" uuid="b7d8ab80-d085-4137-a524-ae88897e4a57">
+                        <property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+                        <jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+                            <staticText>
+                                <reportElement x="0" y="0" width="75" height="30"
+                                               uuid="a222ce0a-4c01-42eb-bf98-785b881b76fa">
+                                    <property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+                                </reportElement>
+                                <textElement verticalAlignment="Middle">
+                                    <font isBold="true"/>
+                                    <paragraph leftIndent="3"/>
+                                </textElement>
+                                <text><![CDATA[Username]]></text>
+                            </staticText>
+                        </jr:columnHeader>
+                        <jr:detailCell style="Table_TD" height="30">
+                            <textField textAdjust="StretchHeight">
+                                <reportElement x="0" y="0" width="75" height="30"
+                                               uuid="5d55290f-deeb-4aea-999b-88fd91b7d318">
+                                    <property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+                                </reportElement>
+                                <textElement>
+                                    <paragraph leftIndent="3"/>
+                                </textElement>
+                                <textFieldExpression><![CDATA[$F{username}]]></textFieldExpression>
+                            </textField>
+                        </jr:detailCell>
+                    </jr:column>
+                    <jr:column width="100" uuid="d887c6c1-9216-4f68-8b3c-6457056c369c">
+                        <property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+                        <jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+                            <staticText>
+                                <reportElement x="0" y="0" width="100" height="30"
+                                               uuid="7ab94c84-8ae5-4753-ba8e-9456d8fc9653">
+                                    <property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+                                </reportElement>
+                                <textElement verticalAlignment="Middle">
+                                    <font isBold="true"/>
+                                    <paragraph leftIndent="3"/>
+                                </textElement>
+                                <text><![CDATA[Full Name]]></text>
+                            </staticText>
+                        </jr:columnHeader>
+                        <jr:detailCell style="Table_TD" height="30">
+                            <textField textAdjust="StretchHeight">
+                                <reportElement x="0" y="0" width="100" height="30"
+                                               uuid="dcdbd0a5-902a-4d81-b0e4-e81cff1010ac">
+                                    <property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+                                </reportElement>
+                                <textElement>
+                                    <paragraph leftIndent="3"/>
+                                </textElement>
+                                <textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+                            </textField>
+                        </jr:detailCell>
+                    </jr:column>
+                    <jr:column width="45" uuid="8738e2a6-52dc-4627-9c4f-d33e2b770ed3">
+                        <property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+                        <jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+                            <staticText>
+                                <reportElement x="0" y="0" width="45" height="30"
+                                               uuid="4607cea7-c897-4fb4-92ed-5220eb168212">
+                                    <property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+                                </reportElement>
+                                <textElement verticalAlignment="Middle">
+                                    <font isBold="true"/>
+                                    <paragraph leftIndent="3"/>
+                                </textElement>
+                                <text><![CDATA[Gender]]></text>
+                            </staticText>
+                        </jr:columnHeader>
+                        <jr:detailCell style="Table_TD" height="30">
+                            <textField textAdjust="StretchHeight">
+                                <reportElement x="0" y="0" width="45" height="30"
+                                               uuid="2602c6f3-0c9f-40df-87c2-f79d18b87ea8">
+                                    <property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+                                </reportElement>
+                                <textElement>
+                                    <paragraph leftIndent="3"/>
+                                </textElement>
+                                <textFieldExpression><![CDATA[$F{gender}]]></textFieldExpression>
+                            </textField>
+                        </jr:detailCell>
+                    </jr:column>
+                    <jr:column width="60" uuid="06bcc99b-2792-4de0-84ea-b2555b335817">
+                        <property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+                        <jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+                            <staticText>
+                                <reportElement x="0" y="0" width="60" height="30"
+                                               uuid="f47abdf0-e07d-43a6-9498-ca2a09c18bab">
+                                    <property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+                                </reportElement>
+                                <textElement verticalAlignment="Middle">
+                                    <font isBold="true"/>
+                                    <paragraph leftIndent="3"/>
+                                </textElement>
+                                <text><![CDATA[Date of Birth]]></text>
+                            </staticText>
+                        </jr:columnHeader>
+                        <jr:detailCell style="Table_TD" height="30">
+                            <textField textAdjust="StretchHeight">
+                                <reportElement x="0" y="0" width="60" height="30"
+                                               uuid="e65b39f5-0c65-4fc1-837d-dc9bec81580e">
+                                    <property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+                                </reportElement>
+                                <textElement>
+                                    <paragraph leftIndent="3"/>
+                                </textElement>
+                                <textFieldExpression><![CDATA[$F{date_of_birth}]]></textFieldExpression>
+                            </textField>
+                        </jr:detailCell>
+                    </jr:column>
+                    <jr:column width="60" uuid="f7f3d6f1-279e-4882-ad1f-b15313508864">
+                        <property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+                        <jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+                            <staticText>
+                                <reportElement x="0" y="0" width="60" height="30"
+                                               uuid="42cf498a-bc31-45d1-aada-b2efd3a15232">
+                                    <property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+                                </reportElement>
+                                <textElement verticalAlignment="Middle">
+                                    <font isBold="true"/>
+                                    <paragraph leftIndent="3"/>
+                                </textElement>
+                                <text><![CDATA[SSN]]></text>
+                            </staticText>
+                        </jr:columnHeader>
+                        <jr:detailCell style="Table_TD" height="30">
+                            <textField textAdjust="StretchHeight">
+                                <reportElement x="0" y="0" width="60" height="30"
+                                               uuid="b49d307e-8ec5-41d1-82ee-008d2bd4f7af">
+                                    <property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+                                </reportElement>
+                                <textElement>
+                                    <paragraph leftIndent="3"/>
+                                </textElement>
+                                <textFieldExpression><![CDATA[$F{ssn}]]></textFieldExpression>
+                            </textField>
+                        </jr:detailCell>
+                    </jr:column>
+                    <jr:column width="50" uuid="23789593-02a0-4148-b824-8135992a35e7">
+                        <property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+                        <jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+                            <staticText>
+                                <reportElement x="0" y="0" width="50" height="30"
+                                               uuid="959d3d21-0634-4ed3-a748-93cfa40762f9">
+                                    <property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+                                </reportElement>
+                                <textElement verticalAlignment="Middle">
+                                    <font isBold="true"/>
+                                    <paragraph leftIndent="3"/>
+                                </textElement>
+                                <text><![CDATA[Contact Number]]></text>
+                            </staticText>
+                        </jr:columnHeader>
+                        <jr:detailCell style="Table_TD" height="30">
+                            <textField textAdjust="StretchHeight">
+                                <reportElement x="0" y="0" width="50" height="30"
+                                               uuid="34eb7959-6df7-478d-a467-e5d9af73ce60">
+                                    <property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+                                </reportElement>
+                                <textElement>
+                                    <paragraph leftIndent="3"/>
+                                </textElement>
+                                <textFieldExpression><![CDATA[$F{mobile}]]></textFieldExpression>
+                            </textField>
+                        </jr:detailCell>
+                    </jr:column>
+                    <jr:column width="60" uuid="199faf55-0f5a-49a4-a8e7-26a3b0141b41">
+                        <property name="com.jaspersoft.studio.components.table.model.column.name" value="Column8"/>
+                        <jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+                            <staticText>
+                                <reportElement x="0" y="0" width="60" height="30"
+                                               uuid="e6ec1042-9c27-45cf-bb86-dd22b32a22df">
+                                    <property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+                                </reportElement>
+                                <textElement verticalAlignment="Middle">
+                                    <font isBold="true"/>
+                                    <paragraph leftIndent="3"/>
+                                </textElement>
+                                <text><![CDATA[Email]]></text>
+                            </staticText>
+                        </jr:columnHeader>
+                        <jr:detailCell style="Table_TD" height="30">
+                            <textField textAdjust="StretchHeight">
+                                <reportElement x="0" y="0" width="60" height="30"
+                                               uuid="0f56e006-8d8a-4a97-ad4b-c12d2f234824">
+                                    <property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+                                </reportElement>
+                                <textElement>
+                                    <paragraph leftIndent="3"/>
+                                </textElement>
+                                <textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+                            </textField>
+                        </jr:detailCell>
+                    </jr:column>
+                    <jr:column width="60" uuid="2b9fea9d-6976-4d33-b2c8-2bd48bf24740">
+                        <property name="com.jaspersoft.studio.components.table.model.column.name" value="Column9"/>
+                        <jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+                            <staticText>
+                                <reportElement x="0" y="0" width="60" height="30"
+                                               uuid="a06b8dec-5f14-417a-be5a-8fad05e33bae">
+                                    <property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+                                </reportElement>
+                                <textElement verticalAlignment="Middle">
+                                    <font isBold="true"/>
+                                    <paragraph leftIndent="3"/>
+                                </textElement>
+                                <text><![CDATA[Address]]></text>
+                            </staticText>
+                        </jr:columnHeader>
+                        <jr:detailCell style="Table_TD" height="30">
+                            <textField textAdjust="StretchHeight">
+                                <reportElement x="0" y="0" width="60" height="30"
+                                               uuid="fb13adb8-9060-47b9-8f8b-e005d18998ff">
+                                    <property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+                                </reportElement>
+                                <textElement>
+                                    <paragraph leftIndent="3"/>
+                                </textElement>
+                                <textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
+                            </textField>
+                        </jr:detailCell>
+                    </jr:column>
+                </jr:table>
+            </componentElement>
+        </band>
+    </detail>
+    <pageFooter>
+        <band height="24" splitType="Stretch">
+            <textField>
+                <reportElement x="2" y="0" width="550" height="21" uuid="2d284873-fdad-40cd-8742-a568a73f3e6a"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA["Page-"+$V{PAGE_COUNT}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+</jasperReport>

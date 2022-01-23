@@ -1,0 +1,14 @@
+create_new_account: >-
+ insert into account(name) values(?)
+  
+read_all_account: >-
+ select id,name from account
+  
+read_account_byid: >-
+ select id ,name from account where id = ?
+ 
+udpate_account_byid: >-
+ update account set name = ? where id = ?
+ 
+delete_account_byid: >-
+ delete from account where id = ? 

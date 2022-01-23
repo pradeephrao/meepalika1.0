@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="diagnose" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20"
+              topMargin="20" bottomMargin="20" uuid="56d61266-223e-4bd3-a80b-04977e5decbb">
+    <property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+    <property name="com.jaspersoft.studio.data.defaultdataadapter" value="hmsnextgen-local"/>
+    <property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="149"/>
+    <property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="844"/>
+    <parameter name="slot_id" class="java.lang.Integer">
+        <defaultValueExpression><![CDATA[$P{slot_id}]]></defaultValueExpression>
+    </parameter>
+    <parameter name="prescriptionBySlotId" class="net.sf.jasperreports.engine.JasperReport" isForPrompting="false"/>
+    <queryString language="SQL">
+        <![CDATA[select acc.name hospital,b.name branch,b.address branch_address,p.date_of_birth,p.mobile_number,p.ssn,p.gender,p.first_name p_fn,p.last_name p_ln,doc.first_name doc_fn,doc.last_name doc_ln,d.patient_complaints,d.provisional_diagnosis,d.investigations,d.created_on,d.modified_on from user p
+join doctor_appointment ap on ap.patient_user_id=p.id
+join diagnose d on d.slot_id = ap.id
+join  user doc on doc.id=ap.doctor_user_id
+join branch b on b.id = ap.branch_id
+join account acc on acc.id = p.account_id
+where ap.id = $P{slot_id}]]>
+    </queryString>
+    <field name="hospital" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="hospital"/>
+        <property name="com.jaspersoft.studio.field.label" value="hospital"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="account"/>
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="branch" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="branch"/>
+        <property name="com.jaspersoft.studio.field.label" value="branch"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="branch"/>
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="branch_address" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="branch_address"/>
+        <property name="com.jaspersoft.studio.field.label" value="branch_address"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="branch"/>
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="date_of_birth" class="java.sql.Date">
+        <property name="com.jaspersoft.studio.field.name" value="date_of_birth"/>
+        <property name="com.jaspersoft.studio.field.label" value="date_of_birth"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="user"/>
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="mobile_number" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="mobile_number"/>
+        <property name="com.jaspersoft.studio.field.label" value="mobile_number"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="user"/>
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="ssn" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="ssn"/>
+        <property name="com.jaspersoft.studio.field.label" value="ssn"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="user"/>
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="gender" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="gender"/>
+        <property name="com.jaspersoft.studio.field.label" value="gender"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="user"/>
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="p_fn" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="p_fn"/>
+        <property name="com.jaspersoft.studio.field.label" value="p_fn"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="user"/>
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="p_ln" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="p_ln"/>
+        <property name="com.jaspersoft.studio.field.label" value="p_ln"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="user"/>
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="doc_fn" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="doc_fn"/>
+        <property name="com.jaspersoft.studio.field.label" value="doc_fn"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="user"/>
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="doc_ln" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="doc_ln"/>
+        <property name="com.jaspersoft.studio.field.label" value="doc_ln"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="user"/>
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="patient_complaints" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="patient_complaints"/>
+        <property name="com.jaspersoft.studio.field.label" value="patient_complaints"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="diagnose"/>
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="provisional_diagnosis" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="provisional_diagnosis"/>
+        <property name="com.jaspersoft.studio.field.label" value="provisional_diagnosis"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="diagnose"/>
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="investigations" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.name" value="investigations"/>
+        <property name="com.jaspersoft.studio.field.label" value="investigations"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="diagnose"/>
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="created_on" class="java.sql.Date">
+        <property name="com.jaspersoft.studio.field.name" value="created_on"/>
+        <property name="com.jaspersoft.studio.field.label" value="created_on"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="diagnose"/>
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="modified_on" class="java.sql.Date">
+        <property name="com.jaspersoft.studio.field.name" value="modified_on"/>
+        <property name="com.jaspersoft.studio.field.label" value="modified_on"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="diagnose"/>
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="65" splitType="Stretch">
+            <rectangle radius="5">
+                <reportElement x="0" y="0" width="556" height="60" backcolor="#FFFFFF"
+                               uuid="043fae14-849f-4c4e-8a3b-8415cef001fa"/>
+                <graphicElement>
+                    <pen lineWidth="1.0" lineColor="#D7D7D7"/>
+                </graphicElement>
+            </rectangle>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="4" y="6" width="232" height="21" forecolor="#000000"
+                               uuid="c35c1d6b-9a04-4fa5-a6ac-ab1db08b723d"/>
+                <textElement textAlignment="Left">
+                    <font size="16" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{hospital}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="4" y="27" width="232" height="21" forecolor="#000000"
+                               uuid="25132c73-58d0-43c0-b13c-ab777b368725"/>
+                <textElement textAlignment="Left" markup="html"/>
+                <textFieldExpression><![CDATA[($F{branch_address}!=null?$F{branch_address}:"")]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="290" y="6" width="263" height="19" uuid="a7bc5b8e-1ef8-447a-b2b9-9b4da21396b8"/>
+                <textElement textAlignment="Right" markup="html"/>
+                <textFieldExpression>
+                    <![CDATA["<b>Doctor: </b>"+$F{doc_fn}+" "+($F{doc_ln}!=null?$F{doc_ln}:"")]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+    <columnHeader>
+        <band height="106" splitType="Stretch">
+            <property name="com.jaspersoft.studio.unit.height" value="px"/>
+            <rectangle radius="5">
+                <reportElement x="2" y="0" width="556" height="60" backcolor="#FFFFFF"
+                               uuid="3d5cd918-3503-4cc4-95b9-c6f6c2b6317b"/>
+                <graphicElement>
+                    <pen lineWidth="1.0" lineColor="#D7D7D7"/>
+                </graphicElement>
+            </rectangle>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="5" y="22" width="278" height="20" uuid="4b673e68-e842-4a2a-9e29-719078984bc5"/>
+                <textElement markup="html"/>
+                <textFieldExpression>
+                    <![CDATA["<b>Date of Birth/Gender: </b>"+$F{date_of_birth}+"/"+$F{gender}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="5" y="2" width="278" height="20" uuid="3b5d440b-d53b-416a-8f26-9d77784d2b99"/>
+                <textElement markup="html"/>
+                <textFieldExpression>
+                    <![CDATA["<b>Name: </b>"+$F{p_fn}+" "+($F{p_ln}!=null?$F{p_ln}:"")]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="5" y="42" width="278" height="21" uuid="d8be651d-d575-4ea8-8787-7061f2bcb6eb"/>
+                <textElement markup="html"/>
+                <textFieldExpression><![CDATA["<b>SSN: </b>"+$F{ssn}!=null?$F{ssn}:""]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="343" y="2" width="213" height="19" uuid="f1231adc-1049-4e09-9650-e40096429365"/>
+                <textElement textAlignment="Right" markup="html"/>
+                <textFieldExpression>
+                    <![CDATA["<b>Date:</b> "+($F{modified_on}!=null?$F{modified_on}:$F{created_on})]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="341" y="21" width="215" height="19" uuid="eb339ee5-3041-4d6e-b6c4-cf154d77b93b"/>
+                <textElement textAlignment="Right" markup="html"/>
+                <textFieldExpression><![CDATA["<b>Mobile:</b> "+$F{mobile_number}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="5" y="65" width="535" height="14" uuid="6731188a-7ee7-4382-90f2-eca1ae559f29"/>
+                <textElement textAlignment="Justified" markup="html"/>
+                <textFieldExpression><![CDATA["<b>Diagnosis</b><br/>"+$F{provisional_diagnosis}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement positionType="Float" x="5" y="87" width="535" height="14"
+                               uuid="6b4fae78-449a-4959-9f64-095ec28fae7d"/>
+                <textElement textAlignment="Justified" markup="html"/>
+                <textFieldExpression>
+                    <![CDATA[$F{investigations}!=null?("<b>Investigations </b><br/>"+$F{investigations}):""]]></textFieldExpression>
+            </textField>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="23" splitType="Stretch">
+            <subreport>
+                <reportElement positionType="Float" stretchType="RelativeToTallestObject" x="-8" y="0" width="25"
+                               height="21" uuid="0a9dbffe-928e-4b11-8ad2-270e2dcc59b3"/>
+                <subreportParameter name="slot_id">
+                    <subreportParameterExpression><![CDATA[$P{slot_id}]]></subreportParameterExpression>
+                </subreportParameter>
+                <connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+                <subreportExpression><![CDATA[$P{prescriptionBySlotId}]]></subreportExpression>
+            </subreport>
+        </band>
+    </detail>
+    <pageFooter>
+        <band height="23" splitType="Stretch">
+            <textField>
+                <reportElement x="2" y="0" width="545" height="20" uuid="7f820e0d-975b-4a13-b9d2-57de4e70f9b9"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+</jasperReport>

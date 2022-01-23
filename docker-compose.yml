@@ -1,0 +1,22 @@
+version: '3.3'
+services:
+  meepalikadb:
+    image: mysql:8.0
+    container_name: meepalikamysqldb
+    environment:
+      MYSQL_DATABASE: 'meepalika'
+      MYSQL_ROOT_PASSWORD: 'rootroot'
+    ports:
+      - "3306:3306"
+    volumes:
+      - /Users/pradeeprao/side/Develop/mysql_data/8
+#  meepalika-app:
+#    build:
+#      context: ./
+#      dockerfile: Dockerfile
+#    hostname: meepapi
+#    container_name: meepalika-api
+#    depends_on:
+#      - meepalikadb
+#    ports:
+#      - "8080:8080"

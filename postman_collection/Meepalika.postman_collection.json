@@ -1,0 +1,234 @@
+{
+	"info": {
+		"_postman_id": "f837ebf0-22f8-4208-96a7-bb0211191a1b",
+		"name": "Meepalika",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bf5b6053-40f6-48b4-861a-763f69616c96",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/meepalika/user/login?username=admin&password=password124",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"meepalika",
+								"user",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "admin"
+								},
+								{
+									"key": "password",
+									"value": "password124"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changePassword",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\":200,\n\t\"userName\":\"admin\",\n\t\"oldPassWord\":\"password123\",\n\t\"newPassWord\":\"password124\",\n\t\"newPassWordRepeat\":\"password124\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8082/neuro/user/changepassword",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"neuro",
+								"user",
+								"changepassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgotpassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8082/neuro/user/forgotpassword/admin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"neuro",
+								"user",
+								"forgotpassword",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "81a4f906-0dfe-4579-bfa3-71e4d764e325",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "4cf56e4a-5dcd-4533-b60d-90735b2b1e6e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "getUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/meepalika/user/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"meepalika",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\":\"buyer10\",\n\t\"accountId\":1,\n\t\"first_name\":\"P\",\n\t\"last_name\":\"Rao\",\n\t\"gender\":\"M\",\n\t\"address\":\"\",\n\t\"ssn\":\"\",\n\t\"city\": \"Burbank\",\n\t\"email\":\"contact.aarushirao@gmail.com\",\n\t\"zipcode\": \"91505\",\n\t\"country_code\":\"IN\",\n\t\"mobile_number\":\"9108088673\",\n\t\"userRole\":[\n\t\t{\n\t\t\t\"id\":\"1\"\n\t\t}\n\t\t],\n\t\"password\":\"Password123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/meepalika/user/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"meepalika",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
