@@ -4,32 +4,24 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
-import javax.persistence.Column;
+import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.meepalika.utils.CustomDateSerializer;
 
 @Entity
 @Table(name = "user")
-
 public class User extends Auditable<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private long id;
 
 	@NotEmpty(message = "username cannot be empty")
 	@Column(name = "username")
@@ -82,8 +74,23 @@ public class User extends Auditable<Long> {
 	@Column(name = "zipcode")
 	private String zipcode;
 
-	@OneToMany(mappedBy="user")
-	private List<UserRole> userRole;
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
+	@ManyToMany
+	@JoinTable(
+			name="user_role",
+			joinColumns = @JoinColumn(name="user_id"),
+			inverseJoinColumns = @JoinColumn(name="role_id")
+	)
+
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<Role> roles;
 	
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@NotNull(message = "account Id cannot be empty")
@@ -99,11 +106,11 @@ public class User extends Auditable<Long> {
 	private String user_media_storage_path;
 
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -227,14 +234,6 @@ public class User extends Auditable<Long> {
 		this.zipcode = zipcode;
 	}
 
-	public List<UserRole> getUserRole() {
-		return userRole;
-	}
-
-	public void setUserRole(List<UserRole> userRole) {
-		this.userRole = userRole;
-	}
-
 	public long getAccountId() {
 		return accountId;
 	}
@@ -268,7 +267,7 @@ public class User extends Auditable<Long> {
 				+ ", accountId=" + accountId + ", user_registration_number=" + user_registration_number
 				+ ", user_media_storage_path=" + user_media_storage_path
 				+ ", created_on=" + getCreationDate() + ", modified_on=" + getLastModifiedDate() + ", created_by=" + getCreatedBy()
-				+ ", modified_by=" + getLastModifiedBy() + ", userRoles=" + userRole + "]";
+				+ ", modified_by=" + getLastModifiedBy() + "]";
 	}
 
 }

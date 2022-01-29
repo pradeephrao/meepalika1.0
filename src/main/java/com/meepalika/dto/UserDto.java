@@ -1,10 +1,11 @@
 package com.meepalika.dto;
 
+
+import com.meepalika.entity.Role;
+
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
-
-import com.meepalika.entity.UserRole;
 
 public class UserDto {
 
@@ -17,8 +18,7 @@ public class UserDto {
 	private String mobile_number;
 	private String email;
 	private String user_registration_number;
-	private int roleId;
-	private List<UserRole> userRole;
+	private List<Role> roles;
 	private String gender;
 	private String user_media_storage_path;
 	private int active;
@@ -106,20 +106,12 @@ public class UserDto {
 		this.user_registration_number = user_registration_number;
 	}
 
-	public int getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
-	}
-
-	public List<UserRole> getUserRole() {
-		return userRole;
+	public List<Role> getRoles() {
+		return roles;
 	}
 	
-	public void setUserRole(List<UserRole> userRole) {
-		this.userRole = userRole;
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 
 	public String getGender() {
@@ -238,7 +230,7 @@ public class UserDto {
 	public String toString() {
 		return "UserDto [id=" + id + ", username=" + username + ", password=" + password + ", first_name=" + first_name
 				+ ", last_name=" + last_name + ", mobile_number=" + mobile_number + ", email=" + email
-				+ ", user_registration_number=" + user_registration_number + ", roleId=" + roleId + ", gender=" + gender
+				+ ", user_registration_number=" + user_registration_number + ", gender=" + gender
 				+ "]";
 	}
 

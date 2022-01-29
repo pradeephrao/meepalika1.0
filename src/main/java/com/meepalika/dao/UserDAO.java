@@ -19,11 +19,11 @@ public interface UserDAO extends JpaRepository<User, Long>, JpaSpecificationExec
 
 	public List<User> findAll();
 
-	public User findById(int id);
+	//public User findById(long id);
 
 	public User findByUsername(String username);
 
-	public User save(User user);
+	//public User save(User user);
 
 	public int countByUsername(String userName);
 
@@ -36,7 +36,7 @@ public interface UserDAO extends JpaRepository<User, Long>, JpaSpecificationExec
 	public Page<User> findAllByAccountIdAndRoleIdAndActive(@Param("accountId") long accountId, @Param("roleId") long roleId,
 														   @Param("active") int active, Pageable paging);
 
-	public void deleteById(int id);
+	//public void deleteById(int id);
 
 	public Page<User> fetchAllDoctorsByAccountIdANDActive(int account_id, int activeDigit, Pageable paging);
 

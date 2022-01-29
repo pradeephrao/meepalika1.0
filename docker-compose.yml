@@ -9,7 +9,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - /Users/pradeeprao/side/Develop/mysql_data/8
+      - /Users/pradeeprao/side/Develop/mysql_data/8/meepalika
 #  meepalika-app:
 #    build:
 #      context: ./

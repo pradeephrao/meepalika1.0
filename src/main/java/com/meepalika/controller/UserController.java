@@ -56,8 +56,9 @@ public class UserController {
 	@PostMapping("/register")
 	public String createUser(@RequestBody User user) {
 		logger.info("create user" + user.toString());
-		logger.debug("Has Role " + request.isUserInRole("ROLE_ADMIN"));
-		if(!request.isUserInRole("ROLE_ADMIN")) {
+		logger.debug("Has Role ADMIN" + request.isUserInRole("ROLE_ADMIN"));
+		logger.debug("Has Role USER " + request.isUserInRole("ROLE_USER"));
+		if(!(request.isUserInRole("ROLE_ADMIN") || request.isUserInRole("ROLE_USER"))) {
 			throw new ApplicationException("User does not have the relevant permission to make this request");
 		}
 		ApiResponse apiResponse = new ApiResponse(CODES.FAILURE);
@@ -75,26 +76,19 @@ public class UserController {
 		return jwtReponse.getToken();
 	}
 
-	@PutMapping(value = "/updateUser", consumes = {MediaType.APPLICATION_JSON_VALUE,
-			MediaType.MULTIPART_FORM_DATA_VALUE})
+	@PutMapping(value = "", consumes = {MediaType.APPLICATION_JSON_VALUE})
 	/*
 	 * user object from client sent as request part(form data) is throwing 400
 	 * error.For now its changed to String we have to look into this later
 	 */
-	public ResponseEntity<ApiResponse> updateUser(@RequestPart @Valid String user,
-												  @RequestParam(value = "file", required = false) MultipartFile file,
-												  @RequestParam("documents") MultipartFile[] documents) {
+	public ResponseEntity<ApiResponse> updateUser(@RequestBody User user) {
 		logger.info("Executing update User() in user controller");
-		if (file != null) {
 			return new ResponseEntity<ApiResponse>(
-					userService.updateUser(userControllerHelper.getJsonUserObject(user), file, documents),
+					userService.updateUser(user, null, null),
 					HttpStatus.OK);
-		}
-		return new ResponseEntity<ApiResponse>(
-				userService.updateUser(userControllerHelper.getJsonUserObject(user), documents), HttpStatus.OK);
 	}
 
-	@GetMapping("/getAllUsersByAccountId/{account_id}")
+	@GetMapping("/account/{account_id}")
 	public ResponseEntity<Map<String, Object>> getAllUsersByAccountId(@PathVariable int account_id,
 																	  @RequestParam("page") int page, @RequestParam("size") int size) {
 		logger.info("User service to be called");
@@ -112,7 +106,7 @@ public class UserController {
 	}
 
 
-	@GetMapping(value = "/checkUserNameExists/{username}")
+	@GetMapping(value = "/exists/{username}")
 	public ResponseEntity<ApiResponse> checkUserNameExists(@PathVariable String username) {
 		logger.info("user service to check user already exists", username);
 		ApiResponse apiResponse = new ApiResponse(CODES.FAILURE);

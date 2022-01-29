@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.meepalika.entity.Role;
 import org.jboss.logging.MDC;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +41,7 @@ public class UserAccessDetailsService implements UserDetailsService {
 
 		enum ROLES {
 			ADMIN, ROLE_SUPERADMIN, ROLE_ADMIN, ROLE_DOCTOR, ROLE_NURSE, ROLE_PATIENT, ROLE_RECEPTIONIST, ROLE_ANONNYMOUS,
-			ROLE_LABTECHNICIAN, ROLE_PHARMACIST, ROLE_ACCOUNTANT, ROLE_OTHER, ROLE_CASEWORKER
+			ROLE_LABTECHNICIAN, ROLE_PHARMACIST, ROLE_ACCOUNTANT, ROLE_OTHER, ROLE_CASEWORKER, ROLE_USER
 		}
 
 		private ROLES role;
@@ -99,11 +100,11 @@ public class UserAccessDetailsService implements UserDetailsService {
 			user = userServiceHelper.convertToUserEntity(userDto);
 		}
 		Collection<UserRoleAccess> userRoles = null;
-		List<UserRole> userRoleList = user.getUserRole();
+		List<Role> userRoleList = user.getRoles();
 		if (userRoleList != null && !userRoleList.isEmpty()) {
 			Collection<String> roles = new ArrayList<String>(userRoleList.size());
-			for (UserRole userRole : userRoleList) {
-				roles.add(userRole.getRole().getName());
+			for (Role userRole : userRoleList) {
+				roles.add(userRole.getName());
 			}
 			userRoles = UserRoleAccess.getRoles(roles);
 		} else {

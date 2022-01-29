@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import com.meepalika.entity.Role;
+import org.jboss.logging.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.meepalika.constants.NumericConstants;
 import com.meepalika.dto.UserDto;
-import com.meepalika.entity.UserRole;
 import com.meepalika.exception.AccessDeniedException;
 import com.meepalika.localization.Translator;
 import com.meepalika.response.ApiResponse;
@@ -61,10 +62,10 @@ public class HMSUserAuthenticationManager implements AuthenticationManager {
 		}
 
 		Collection<UserRoleAccess> userRoles = null;
-		List<UserRole> userRoleList = userDto.getUserRole();
+		List<Role> userRoleList = userDto.getRoles();
 		Collection<String> roles = new ArrayList<String>(userRoleList.size());
-		for (UserRole userRole : userRoleList) {
-			roles.add(userRole.getRole().getName());
+		for (Role userRole : userRoleList) {
+			roles.add(userRole.getName());
 		}
 		if (roles == null || !roles.isEmpty()) {
 			if (roles == null || roles.size() == 0)
@@ -75,6 +76,7 @@ public class HMSUserAuthenticationManager implements AuthenticationManager {
 		UsernamePasswordAuthenticationToken hmsUser = new UsernamePasswordAuthenticationToken(userName, password,
 				userRoles);
 		hmsUser.setDetails(userServiceHelper.convertToUserEntity(userDto));
+		MDC.put("loggedInUser", userDto.getId());
 		return hmsUser;
 	}
 

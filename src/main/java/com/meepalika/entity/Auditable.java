@@ -1,6 +1,9 @@
 package com.meepalika.entity;
 
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.slf4j.MDC;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -30,6 +33,7 @@ public class Auditable<U> {
 	@CreatedDate
 	@Column(name = "created_on", updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
+	@CreationTimestamp
 	private Date creationDate;
 
 	@LastModifiedBy
@@ -38,6 +42,7 @@ public class Auditable<U> {
 
 	@LastModifiedDate
 	@Column(name = "modified_on")
+	@UpdateTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastModifiedDate;
 
@@ -47,7 +52,10 @@ public class Auditable<U> {
 	}
 
 	public void setCreatedBy(U createdBy) {
-		this.createdBy = createdBy;
+		if(MDC.get("loggedInUser") != null){
+			Long userID = Long.parseLong(MDC.get("loggedInUser"));
+		}
+
 	}
 
 	public Date getCreationDate() {
@@ -63,6 +71,10 @@ public class Auditable<U> {
 	}
 
 	public void setLastModifiedBy(U lastModifiedBy) {
+		if(MDC.get("loggedInUser") != null){
+			Long userID = Long.parseLong(MDC.get("loggedInUser"));
+		}
+
 		this.lastModifiedBy = lastModifiedBy;
 	}
 

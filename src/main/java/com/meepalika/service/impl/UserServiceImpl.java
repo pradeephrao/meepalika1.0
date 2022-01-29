@@ -3,6 +3,7 @@ package com.meepalika.service.impl;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.meepalika.entity.Role;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,13 +63,13 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		logger.info("Executing createUser() in user service");
 		ApiResponse apiResponse = null;
 		try {
-			List<UserRole> userRoleList = user.getUserRole();
-			User userToCreate = user;
+			//List<Role> userRoleList = user.getRoles();
+			//User userToCreate = user;
 
 			checkIfPhoneNumberExists(user);
 			user = userDAO.save(user);
 
-			if (user != null && userRoleList != null && !userRoleList.isEmpty()) {
+/*			if (user != null && userRoleList != null && !userRoleList.isEmpty()) {
 				List<UserRole> userRoles = new ArrayList<UserRole>(userRoleList.size());
 				User innerClassObj = user;
 				userRoles = userRoleList.stream().map(ur -> {
@@ -79,8 +80,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 					userRole.setActive(NumericConstants.ACTIVE_DIGIT);
 					return userRole;
 				}).collect(Collectors.toList());
-				userRoleDAO.saveAll(userRoles);
-			}
+				userRoleDAO.saveAll(userRoles);*/
+			//}
 		} catch (DataAccessException e) {
 			String message = Translator.toLocale("exception_raised_create_user");
 			apiResponse = generateApiResponse(CODES.FAILURE, message);
@@ -104,9 +105,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		ApiResponse apiResponse = null;
 		try {
 			User originalUserObj = user;
+			Optional<User> userOpt = userDAO.findById(user.getId());
+			originalUserObj = userOpt.get();
+			user.setPassword(originalUserObj.getPassword());
 //			checkIfPhoneNumberExists(user);
 			user = userDAO.save(user);
-			List<UserRole> userRoleList = getUserRoles(user.getId());
+			//List<UserRole> userRoleList = getUserRoles(user.getId());
 		} catch (DataAccessException e) {
 			String message = Translator.toLocale("exception_raised_update_user");
 			apiResponse = generateApiResponse(CODES.FAILURE, message);
@@ -127,8 +131,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	@Override
 	public ApiResponse updateUser(User user, MultipartFile file, MultipartFile[] documents) {
 		logger.info("Executing updateUser() for file replacement in user service");
-		String uploadedPath = fileUploadService.updateUserWithProfile(user.getId(), file);
-		user.setUser_media_storage_path(uploadedPath);
 		return updateUser(user, documents);
 	}
 
@@ -157,7 +159,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			userOpt = userDAO.findById(id);
 			user = userOpt.get();
 			if (user != null) {
-				user.setUserRole(getUserRoles(user.getId()));
 				userDto = userServiceHelper.convertToUserDto(user);
 			}
 		} catch (DataAccessException e) {
@@ -213,7 +214,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			if (user != null) {
 				userAccountApproved = accountService.getAccountById(user.getAccountId()).getAccountVerified() > 0 ? true
 						: false;
-				user.setUserRole(getUserRoles(user.getId()));
+				user.setRoles(getUserRoles(user.getId()));
 				userDto = userServiceHelper.convertToUserDto(user);
 			}
 
@@ -385,18 +386,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		return response;
 	}
 
-	public List<UserRole> getUserRoles(long userId) {
-		List<UserRole> userRoleList = userRoleDAO.findByUserId(userId);
-		List<UserRole> userRoles = null;
-		if (!userRoleList.isEmpty()) {
-			userRoles = new ArrayList<UserRole>(userRoleList.size());
-			for (UserRole userRole : userRoleList) {
-				UserRole role = new UserRole();
-				role.setActive(userRole.getActive());
-				role.setRole(userRole.getRole());
-				role.setId(userRole.getId());
-				role.setIsPrimaryRole(userRole.getIsPrimaryRole());
-				userRoles.add(role);
+	public List<Role> getUserRoles(long userId) {
+		Optional<User> userOPt =  userDAO.findById(userId);
+		User user = userOPt.get();
+		List<Role> userRoles = null;
+		if (!user.getRoles().isEmpty()) {
+			userRoles = new ArrayList<Role>(user.getRoles().size());
+			for (Role _role : user.getRoles()) {
+				userRoles.add(_role);
 			}
 		}
 		return userRoles;

@@ -27,14 +27,14 @@ public class UserServiceHelper {
 	public UserDto convertToUserDto(User user) {
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		UserDto userDto = modelMapper.map(user, UserDto.class);
-		userDto.setUserRole(user.getUserRole());
+		userDto.setRoles(user.getRoles());
 		return userDto;
 	}
 
 	public User convertToUserEntity(UserDto userDto) {
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		User user = modelMapper.map(userDto,User.class);
-		user.setUserRole(userDto.getUserRole());
+		user.setRoles(userDto.getRoles());
 		return user;
 	}
 }
