@@ -31,7 +31,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/meepalika/user/login?username=admin&password=password124",
+							"raw": "http://localhost:8080/meepalika/user/login?username=buyer20&password=Password123",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -45,11 +45,11 @@
 							"query": [
 								{
 									"key": "username",
-									"value": "admin"
+									"value": "buyer20"
 								},
 								{
 									"key": "password",
-									"value": "password124"
+									"value": "Password123"
 								}
 							]
 						}
@@ -171,7 +171,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/meepalika/user/1",
+							"raw": "http://localhost:8080/meepalika/user/19",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -180,7 +180,7 @@
 							"path": [
 								"meepalika",
 								"user",
-								"1"
+								"19"
 							]
 						}
 					},
@@ -210,7 +210,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"username\":\"buyer10\",\n\t\"accountId\":1,\n\t\"first_name\":\"P\",\n\t\"last_name\":\"Rao\",\n\t\"gender\":\"M\",\n\t\"address\":\"\",\n\t\"ssn\":\"\",\n\t\"city\": \"Burbank\",\n\t\"email\":\"contact.aarushirao@gmail.com\",\n\t\"zipcode\": \"91505\",\n\t\"country_code\":\"IN\",\n\t\"mobile_number\":\"9108088673\",\n\t\"userRole\":[\n\t\t{\n\t\t\t\"id\":\"1\"\n\t\t}\n\t\t],\n\t\"password\":\"Password123\"\n}"
+							"raw": "{\n\t\"username\":\"buyer21\",\n\t\"accountId\":1,\n\t\"first_name\":\"P\",\n\t\"last_name\":\"Rao\",\n\t\"gender\":\"M\",\n\t\"address\":\"\",\n\t\"ssn\":\"\",\n\t\"city\": \"Burbank\",\n\t\"email\":\"contact.aarushirao@gmail.com\",\n\t\"zipcode\": \"91505\",\n\t\"country_code\":\"IN\",\n\t\"mobile_number\":\"9207098673\",\n\t\"roles\": [\n            {\n                \"id\": 2\n            }\n        ],\n\t\"password\":\"Password123\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/meepalika/user/register",
@@ -227,8 +227,53 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "updateUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\":27,\n\t\"username\":\"buyer21\",\n\t\"accountId\":1,\n\t\"first_name\":\"P\",\n\t\"last_name\":\"Rao\",\n\t\"gender\":\"M\",\n\t\"address\":\"\",\n\t\"ssn\":\"\",\n\t\"city\": \"Burbank\",\n\t\"email\":\"spamitinhere@gmail.com\",\n\t\"zipcode\": \"91505\",\n\t\"country_code\":\"IN\",\n\t\"mobile_number\":\"9207098673\",\n\t\"roles\": [\n            {\n                \"id\": 1\n            }\n        ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/meepalika/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"meepalika",
+								"user"
+							]
+						}
+					},
+					"response": []
 				}
 			]
+		},
+		{
+			"name": "Order",
+			"item": []
 		}
 	]
 }
