@@ -2,14 +2,13 @@ package com.meepalika.controller;
 
 import com.meepalika.entity.Product;
 import com.meepalika.service.ProductService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/products")
 public class ProductController {
 
     private ProductService productService;
@@ -21,5 +20,17 @@ public class ProductController {
     @GetMapping(value = { "", "/" })
     public @NotNull Iterable<Product> getProducts() {
         return productService.getAllProducts();
+    }
+
+
+    @PostMapping(value = "", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public void addProduct(@RequestBody Product product){
+        productService.save(product);
+    }
+
+
+    @PutMapping(value = "", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public void updateProduct(@RequestBody Product product){
+        productService.save(product);
     }
 }

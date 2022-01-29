@@ -274,6 +274,110 @@
 		{
 			"name": "Order",
 			"item": []
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Add Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/meepalika/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"meepalika",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProducts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/meepalika/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"meepalika",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateProduct",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\":1,\n\t\"name\":\"Kwik\",\n\t\"price\":\"250.00\",\n\t\"pictureUrl\":\"https://hi-in.facebook.com/Meepalika/photos/pcb.131873545983582/131873502650253/?type=3&__tn__=HH-R&eid=ARAJdmZuZUEHAVz7LJjS5e6xT6ENppkSpPrUNjtTXrledePvJl9vqAqwG57zYT_gv_eJffO8LiJS1QDp&__xts__%5B0%5D=68.ARB-ggYtIee2nZkursV3fq7ysrD59MbJP6PFBA3hLJINpn1ASys7yarxYnEu-qJd5CRIjxG0DAylDXjSCUttHNU_79lXBKcqgOVTXPbotH6GXl7XLUVNu5mzUyuaSv6gpODGLdiINf8yrkdDYER5r4PvmRNTQmK0ErUwWNnR-0xgby__0L0mTZvdk_f_K1LvHJDD3wFRJRyOAasJGU8R4MLuhHSHK0ZqAUbhyUsJXCBPSjja-hNGiVU72GUM3yZ7XBwhHoUpGb5b530IBuIPDhnAK_bhgjnEKKWw_8pZyOefisJ2h9o\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/meepalika/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"meepalika",
+								"products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

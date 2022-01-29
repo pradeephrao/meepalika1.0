@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="product")
-public class Product {
+public class Product extends Auditable<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,10 +13,13 @@ public class Product {
 
     @NotNull(message = "Product name is required.")
     @Basic(optional = false)
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "price")
     private Double price;
 
+    @Column(name = "pictureUrl")
     private String pictureUrl;
 
     public Product(Long id, @NotNull(message = "Product name is required.") String name, Double price, String pictureUrl) {
