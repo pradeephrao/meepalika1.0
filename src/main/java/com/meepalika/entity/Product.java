@@ -9,6 +9,7 @@ public class Product extends Auditable<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     private Long id;
 
     @NotNull(message = "Product name is required.")

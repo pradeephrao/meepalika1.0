@@ -1,11 +1,13 @@
 package com.meepalika.dto;
 
 import com.meepalika.entity.Product;
+import com.meepalika.entity.User;
 
 public class OrderProductDto {
 
     private Product product;
     private Integer quantity;
+    private User orderedBy;
 
     public Product getProduct() {
         return product;

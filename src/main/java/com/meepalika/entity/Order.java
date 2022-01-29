@@ -1,41 +1,57 @@
 package com.meepalika.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import javax.validation.Valid;
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Entity
 @Table(name = "order")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="orderProducts")
-public class Order {
+public class Order extends Auditable<Long> implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     private Long id;
 
-    @JsonFormat(pattern = "dd/MM/yyyy") private LocalDate dateCreated;
-
+    @Column(name="status")
     private String status;
-
-    @OneToMany(mappedBy = "pk.order")
-    @Valid
-    private List<OrderProduct> orderProducts = new ArrayList<>();
 
     @Transient
     public Double getTotalOrderPrice() {
-        double sum = 0D;
-        List<OrderProduct> orderProducts = getOrderProducts();
-        for (OrderProduct op : orderProducts) {
-            sum += op.getTotalPrice();
-        }
+        AtomicReference<Double> sum = new AtomicReference<>(0D);
+        orderDetails.stream().forEach((k) -> {
+            sum.updateAndGet(v -> (v + k.getQuantity() * k.getProduct().getPrice()));
+        });;
+        return sum.get();
+    }
 
-        return sum;
+    @OneToOne
+    @JoinTable(
+            name="user",
+            joinColumns=  @JoinColumn(name="orderedBy")
+    )
+    private User orderedBy;
+
+    @ManyToMany
+    @JoinTable(
+            name="order_details",
+            joinColumns = @JoinColumn(name="order_id")
+    )
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<OrderDetails> orderDetails;
+
+    public List<OrderDetails> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(List<OrderDetails> _orderDetails) {
+        this.orderDetails = _orderDetails;
     }
 
     public Long getId() {
@@ -46,14 +62,6 @@ public class Order {
         this.id = id;
     }
 
-    public LocalDate getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(LocalDate dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -62,16 +70,26 @@ public class Order {
         this.status = status;
     }
 
-    public List<OrderProduct> getOrderProducts() {
-        return orderProducts;
+    public User getOrderedBy() {
+        return orderedBy;
     }
 
-    public void setOrderProducts(List<OrderProduct> orderProducts) {
-        this.orderProducts = orderProducts;
+    public void setOrderedBy(User orderedBy) {
+        this.orderedBy = orderedBy;
     }
 
-    @Transient
-    public int getNumberOfProducts() {
-        return this.orderProducts.size();
+    @OneToOne
+    @JoinTable(
+            name="shipping_address",
+            joinColumns = @JoinColumn(name="shipping_address_id")
+    )
+    private ShippingAddress shippingAddress;
+
+    public void setShippingAddress(ShippingAddress shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+
+    public ShippingAddress getShippingAddress() {
+        return shippingAddress;
     }
 }
