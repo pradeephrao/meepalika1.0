@@ -37,7 +37,7 @@ public class BeanConfig {
 
 		System.out.println("Long value "+defaultadminuser.longValue());
 		System.out.println("logged in user str" + MDC.get("loggedInUserStr"));
-		
+
 		System.out.println("logged in user" + MDC.get("loggedInUser"));
 		if(MDC.get("loggedInUserStr") == null){
 			return () -> Optional.of(defaultadminuser);
