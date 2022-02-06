@@ -3,18 +3,18 @@ package com.meepalika.service;
 import com.meepalika.dao.OrderDetailsRepository;
 import com.meepalika.dao.ShippingAddressRepository;
 import com.meepalika.dao.UserDAO;
-import com.meepalika.entity.Order;
+import com.meepalika.entity.*;
 import com.meepalika.dao.OrderRepository;
-import com.meepalika.entity.OrderDetails;
-import com.meepalika.entity.ShippingAddress;
-import com.meepalika.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.text.html.Option;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,10 +51,12 @@ public class OrderServiceImpl implements com.meepalika.service.OrderService {
         Optional<User> useropt = userDAO.findById(order.getOrderedBy().getId());
         User user = useropt.get();
         order.setOrderedBy(user);
+        order.setStatus(ORDERSTATUS.Ordered);
         Order returnOrder = this.orderRepository.save(order);
         List<OrderDetails> odetails = new ArrayList<>();
 
         order.getOrderDetails().stream().forEach(od->{
+            od.setStatus(ORDERDETAILSTATUS.Ordered);
             od.setOrderId(returnOrder.getId());
             odetails.add(od);
         });
@@ -72,5 +74,12 @@ public class OrderServiceImpl implements com.meepalika.service.OrderService {
     @Override
     public void update(Order order) {
         this.orderRepository.save(order);
+    }
+
+    public void cancelOrderDetails(@NotNull(message = "The order cannot be null.") @Valid Long []ids){
+
+        ArrayList<Long> idsList= (ArrayList<Long>) Arrays.asList(ids);
+        List<OrderDetails> orderDetailsList = orderDetailsRepository.findByIdIn(idsList);
+
     }
 }

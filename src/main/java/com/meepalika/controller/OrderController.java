@@ -31,4 +31,9 @@ public class OrderController {
         orderService.create(order);
     }
 
+    @PutMapping(value = "", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public void cancelOrderDetails(@RequestBody Long []ids){
+
+    }
+
 }

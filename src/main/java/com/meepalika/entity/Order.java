@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name = "myorder")
@@ -20,7 +21,8 @@ public class Order extends Auditable<Long> implements Serializable {
     private Long id;
 
     @Column(name="status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private ORDERSTATUS status;
 
     @Transient
     public Double getTotalOrderPrice() {
@@ -59,11 +61,11 @@ public class Order extends Auditable<Long> implements Serializable {
         this.id = id;
     }
 
-    public String getStatus() {
+    public ORDERSTATUS getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ORDERSTATUS status) {
         this.status = status;
     }
 
@@ -85,4 +87,6 @@ public class Order extends Auditable<Long> implements Serializable {
     public ShippingAddress getShippingAddress() {
         return shippingAddress;
     }
+
+
 }

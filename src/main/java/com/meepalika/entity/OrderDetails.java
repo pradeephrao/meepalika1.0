@@ -10,10 +10,12 @@ import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name = "order_details")
 public class OrderDetails extends Auditable<Long> {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +23,8 @@ public class OrderDetails extends Auditable<Long> {
     private Long id;
 
     @Column(name="status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private ORDERDETAILSTATUS status;
 
     @Column(name="order_id")
     private Long orderId;
@@ -75,11 +78,11 @@ public class OrderDetails extends Auditable<Long> {
     }
 
 
-    public String getStatus() {
+    public ORDERDETAILSTATUS getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ORDERDETAILSTATUS status) {
         this.status = status;
     }
 
@@ -90,5 +93,7 @@ public class OrderDetails extends Auditable<Long> {
     public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
+
+
 
 }

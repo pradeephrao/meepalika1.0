@@ -12,5 +12,7 @@ public interface OrderService {
 
     Order create(@NotNull(message = "The order cannot be null.") @Valid Order order);
 
-    void update(@NotNull(message = "The order cannot be null.") @Valid Order order);
+    public void update(@NotNull(message = "The order cannot be null.") @Valid Order order);
+
+    public void cancelOrderDetails(@NotNull(message = "The order cannot be null.") @Valid Long []ids);
 }
