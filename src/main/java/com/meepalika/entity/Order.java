@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Entity
-@Table(name = "order")
+@Table(name = "myorder")
 public class Order extends Auditable<Long> implements Serializable {
 
     @Id
@@ -31,20 +31,17 @@ public class Order extends Auditable<Long> implements Serializable {
         return sum.get();
     }
 
-    @OneToOne
-    @JoinTable(
-            name="user",
-            joinColumns=  @JoinColumn(name="orderedBy")
-    )
+    @OneToOne(cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "orderedBy", referencedColumnName = "id")
     private User orderedBy;
 
-    @ManyToMany
-    @JoinTable(
-            name="order_details",
-            joinColumns = @JoinColumn(name="order_id")
-    )
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(fetch = FetchType.LAZY,  cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
     private List<OrderDetails> orderDetails;
+
+
+    @Transient
+    private ShippingAddress shippingAddress;
 
     public List<OrderDetails> getOrderDetails() {
         return orderDetails;
@@ -78,12 +75,8 @@ public class Order extends Auditable<Long> implements Serializable {
         this.orderedBy = orderedBy;
     }
 
-    @OneToOne
-    @JoinTable(
-            name="shipping_address",
-            joinColumns = @JoinColumn(name="shipping_address_id")
-    )
-    private ShippingAddress shippingAddress;
+
+
 
     public void setShippingAddress(ShippingAddress shippingAddress) {
         this.shippingAddress = shippingAddress;

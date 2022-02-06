@@ -23,21 +23,19 @@ public class OrderDetails extends Auditable<Long> {
     @Column(name="status")
     private String status;
 
+    @Column(name="order_id")
+    private Long orderId;
+
+
     @OneToOne
-    @JoinTable(
-            name="user",
-            joinColumns = @JoinColumn(name="ordered_by")
-    )
+    @JoinColumn(name = "ordered_by", referencedColumnName = "id")
     private User orderedBy;
 
     @Column(name="quantity")
     private long quantity;
 
     @OneToOne
-    @JoinTable(
-            name="product",
-            joinColumns = @JoinColumn(name="productId")
-    )
+    @JoinColumn(name = "productId", referencedColumnName = "id")
     private Product product = new Product();
 
     public void setOrderedBy(User orderedBy) {
@@ -84,4 +82,13 @@ public class OrderDetails extends Auditable<Long> {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
 }

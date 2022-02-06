@@ -38,6 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/error").permitAll().antMatchers("/user/login").permitAll()
 				.antMatchers("/user/register").permitAll().antMatchers("/user/updatePassword/**").permitAll()
 				.antMatchers("/account/create").permitAll().antMatchers(HttpMethod.POST).authenticated()
+				.antMatchers("/orders/**").permitAll().antMatchers(HttpMethod.POST).authenticated()
 				.antMatchers(HttpMethod.PUT).authenticated().antMatchers(HttpMethod.DELETE).authenticated()
 				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll().antMatchers("**/admin/**")
 				.hasAuthority("ROLE_ADMIN").anyRequest().authenticated();

@@ -273,7 +273,49 @@
 		},
 		{
 			"name": "Order",
-			"item": []
+			"item": [
+				{
+					"name": "createOrders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"status\":\"Ordered\",\n\t\"orderedBy\":{\n\t\t\"id\":2\n\t},\n\t\n\t\"orderDetails\":[\n\t\t{\n\t\t\"status\":\"Ordered\",\n\t\t\"quantity\":1,\n\t\t\"orderedBy\":{\n\t\t\t\"id\":\"26\"\n\t\t},\n\t\n\t\t\"product\":{\n\t\t\t\"id\":1\n\t\t}\n\t}\n\t],\n\t\"shippingAddress\":{\n\t\t\"address1\":\"1223\",\n\t\t\"address2\":\"23 C 23 M\",\n\t\t\"city\":\"Bengaluru\",\n\t\t\"state\":\"Karnataka\",\n\t\t\"pincode\":\"560070\",\n\t\t\"country\":\"India\",\n\t\t\"landmark\":\"BDS Shopping Complex\",\n\t\t\"contactNumber\":\"9886720673\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/meepalika/orders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"meepalika",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Product",

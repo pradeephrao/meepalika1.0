@@ -93,7 +93,7 @@ CREATE TABLE `meepalika`.`product` (
 
 
 
-CREATE TABLE `meepalika`.`order` (
+CREATE TABLE `meepalika`.`myorder` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `status` VARCHAR(45) NULL,
   `created_by` BIGINT NULL,
@@ -104,7 +104,7 @@ CREATE TABLE `meepalika`.`order` (
 
 
 
-ALTER TABLE `meepalika`.`order`
+ALTER TABLE `meepalika`.`myorder`
 ADD COLUMN `orderedBy` BIGINT NOT NULL AFTER `status`;
 
 
@@ -123,7 +123,7 @@ CREATE TABLE `meepalika`.`order_details` (
   INDEX `FK_ORDEREDBY_idx` (`ordered_by` ASC) VISIBLE,
   CONSTRAINT `FK_ORDERID`
     FOREIGN KEY (`order_id`)
-    REFERENCES `meepalika`.`order` (`id`)
+    REFERENCES `meepalika`.`myorder` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_ORDEREDBY`
@@ -152,7 +152,7 @@ CREATE TABLE `meepalika`.`shipping_address` (
   INDEX `FK_SHIP_ORDERID_idx` (`order_id` ASC) VISIBLE,
   CONSTRAINT `FK_SHIP_ORDERID`
     FOREIGN KEY (`order_id`)
-    REFERENCES `meepalika`.`order` (`id`)
+    REFERENCES `meepalika`.`myorder` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
@@ -165,14 +165,12 @@ ADD COLUMN `created_on` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 ADD COLUMN `modified_by` BIGINT NULL,
 ADD COLUMN  `modified_on` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 
-ALTER TABLE `meepalika`.`order`
+ALTER TABLE `meepalika`.`myorder`
 ADD COLUMN `shipping_address_id` BIGINT NULL AFTER `orderedBy`;
 
 
-ALTER TABLE `meepalika`.`order`
-ADD INDEX `FK_ORDER_SHIPPING_idx1` (`shipping_address_id` ASC) VISIBLE;
-;
-ALTER TABLE `meepalika`.`order`
+
+ALTER TABLE `meepalika`.`myorder`
 ADD CONSTRAINT `FK_ORDER_SHIPPING`
   FOREIGN KEY (`shipping_address_id`)
   REFERENCES `meepalika`.`shipping_address` (`id`)
@@ -180,6 +178,8 @@ ADD CONSTRAINT `FK_ORDER_SHIPPING`
   ON UPDATE NO ACTION;
 
 
+ALTER TABLE `meepalika`.`shipping_address`
+CHANGE COLUMN `id` `id` BIGINT NOT NULL AUTO_INCREMENT ;
 
 ALTER TABLE `meepalika`.`shipping_address`
 DROP FOREIGN KEY `FK_SHIP_ORDERID`;
@@ -189,6 +189,26 @@ ALTER TABLE `meepalika`.`shipping_address` ALTER INDEX `FK_SHIP_ORDERID_idx` VIS
 ALTER TABLE `meepalika`.`shipping_address`
 ADD CONSTRAINT `FK_SHIP_ORDERID`
   FOREIGN KEY (`order_id`)
-  REFERENCES `meepalika`.`order` (`id`)
+  REFERENCES `meepalika`.`myorder` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
+
+ALTER TABLE `meepalika`.`myorder`
+ADD INDEX `FK_ORDER_SHIPPING_idx1` (`shipping_address_id` ASC) VISIBLE;
+;
+ALTER TABLE `meepalika`.`myorder`
+ADD CONSTRAINT `FK_ORDER_SHIPPING`
+  FOREIGN KEY (`shipping_address_id`)
+  REFERENCES `meepalika`.`shipping_address` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+
+ALTER TABLE `meepalika`.`myorder`
+DROP FOREIGN KEY `FK_ORDER_SHIPPING`;
+ALTER TABLE `meepalika`.`myorder`
+DROP COLUMN `shipping_address_id`,
+DROP INDEX `FK_ORDER_SHIPPING_idx` ,
+ADD INDEX `FK_ORDER_SHIPPING_idx` (`id` ASC) VISIBLE,
+DROP INDEX `FK_ORDER_SHIPPING_idx1` ;
+;
