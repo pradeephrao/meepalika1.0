@@ -76,10 +76,60 @@ public class OrderServiceImpl implements com.meepalika.service.OrderService {
         this.orderRepository.save(order);
     }
 
-    public void cancelOrderDetails(@NotNull(message = "The order cannot be null.") @Valid Long []ids){
+    @Override
+    @Transactional
+    public void cancelOrderDetails(List<Long> ids){
 
-        ArrayList<Long> idsList= (ArrayList<Long>) Arrays.asList(ids);
-        List<OrderDetails> orderDetailsList = orderDetailsRepository.findByIdIn(idsList);
+        //ArrayList<Long> idsList= (ArrayList<Long>) Arrays.asList(ids);
+        List<OrderDetails> orderDetailsList = orderDetailsRepository.findByIdIn(ids);
+        List<OrderDetails> saveOrderDetailsList = new ArrayList<>();
+        orderDetailsList.stream().forEach(od->{
+            od.setStatus(ORDERDETAILSTATUS.Canceled);
+            saveOrderDetailsList.add(od);
+        });
+        orderDetailsRepository.saveAll(saveOrderDetailsList);
+    }
+
+
+    @Override
+    @Transactional
+    public void cancelOrder(Long id){
+
+        Optional<Order> orderOPt = orderRepository.findById(id);
+
+        Order order = orderOPt.get();
+
+        List<OrderDetails> orderDetailsList = order.getOrderDetails();
+        List<OrderDetails> saveOrderDetailsList = new ArrayList<>();
+        orderDetailsList.stream().forEach(od->{
+            od.setStatus(ORDERDETAILSTATUS.Canceled);
+            saveOrderDetailsList.add(od);
+        });
+        order.setStatus(ORDERSTATUS.Canceled);
+        orderRepository.save(order);
+        orderDetailsRepository.saveAll(saveOrderDetailsList);
+
+    }
+
+    @Override
+    @Transactional
+    public void paidOrder(@NotNull(message = "The order to cancel cannot be null.") @Valid Long id){
+        Optional<Order> orderOPt = orderRepository.findById(id);
+
+        Order order = orderOPt.get();
+        order.setStatus(ORDERSTATUS.Paid);
+        orderRepository.save(order);
+
+    }
+
+    @Override
+    @Transactional
+    public void shippedOrder(@NotNull(message = "The order to cancel cannot be null.") @Valid Long id){
+        Optional<Order> orderOPt = orderRepository.findById(id);
+
+        Order order = orderOPt.get();
+        order.setStatus(ORDERSTATUS.Shipped);
+        orderRepository.save(order);
 
     }
 }
