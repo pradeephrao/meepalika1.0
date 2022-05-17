@@ -22,6 +22,11 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+    @GetMapping(value = { "", "/{id}" })
+    public @NotNull Product getProduct(@PathVariable long id) {
+        return productService.getProduct(id);
+    }
+
 
     @PostMapping(value = "", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public void addProduct(@RequestBody Product product){
